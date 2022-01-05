@@ -39,7 +39,7 @@ A signal handler is a function that is called when a specified signal is deliver
 invocation of a handler may stop the main program at ny time and then the kernerl calls the handler on behalf of the process and then when the handler
 returns the excution of program resumed
 
-![image](https://github.com/project-HOSSAM/minitalk/img/sgina-delevery-and-handle-excution.png)
+![image](img/sgina-delevery-and-handle-excution.png)
 
 sigint handler example:
 ```c
