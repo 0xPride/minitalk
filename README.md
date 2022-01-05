@@ -88,3 +88,46 @@ int kill(pid_t pid, int sig); // return 0 on success otherwise return -1
 
 if we pass 0 signal to kill system call it merely do error cheking to see if a process can be signaled.
 if kill system call faild with the ESRCH error then the signal doesn't exist, if the error is EPERM then we dont have permission to signal that process and if it succeeds then the process exists and can be signaled
+
+## Signal sets
+
+many system calls need a singal group as an argument
+```c
+int sigempyset(sigset_t *set); // initialize an empy signal set
+int sigfillate(sigset_t *set); // initialize a singal set with all signals
+
+```
+
+we can add/remove a signal from a set
+```c
+int sigaddset(sigset_t *set, int signo); // add a signal to signal set
+int sigdelset(sigset_t *set, int signo); // delete a signal from a signal set
+```
+
+we can check if a signal in a set
+```c
+sigismember(const sigset_t *set, int signo);
+```
+
+## Signal mask
+For each process, the kernel maintains a signal mask—a set of signals whose delivery to the process is currently blocked.
+If a signal that is blocked is sent to a process, delivery of that signal is delayed until it is unblocked by being removed from the
+process signal mask.
+
+we can add a signal to the signal mask set by:
+-  When a signal handler is invoked, the signal that caused its invocation can be
+automatically added to the signal mask
+- When a signal handler is established with sigaction(), it is possible to specify an
+additional set of signals that are to be blocked when the handler is invoked.
+- The sigprocmask() system call can be used at any time to explicitly add signals to,
+and remove signals from, the signal mask
+```c
+int sigprocmask(int how, const sigset_t *set, sigset_t *oset);
+```
+we can pass the how argument the following
+- SIG_BLOCK The signals specified in the signal set pointed to by set are added to the signal mask. In other words, the signal mask is set to the union of its current
+value and set.
+- SIG_UNBLOCK The signals in the signal set pointed to by set are removed from the signal
+mask. Unblocking a signal that is not currently blocked doesn’t cause an
+error to be returned.
+- SIG_SETMASK The signal set pointed to by set is assigned to the signal mask.
