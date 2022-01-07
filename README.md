@@ -106,7 +106,7 @@ int sigdelset(sigset_t *set, int signo); // delete a signal from a signal set
 
 we can check if a signal in a set
 ```c
-sigismember(const sigset_t *set, int signo);
+int sigismember(const sigset_t *set, int signo);
 ```
 
 ## Signal mask
@@ -131,3 +131,21 @@ value and set.
 mask. Unblocking a signal that is not currently blocked doesn’t cause an
 error to be returned.
 - SIG_SETMASK The signal set pointed to by set is assigned to the signal mask.
+
+## Pending signals
+
+If a process receives a signal that it is currently blocking, that signal is added to the
+process’s set of pending signals. When (and if) the signal is later unblocked, it is
+then delivered to the process, we can get the currenlty pending signals with the following:
+```c
+int sigpending(sigset_t *set);
+```
+## Interprocess communication (IPC)
+
+rom one viewpoint, we can consider signals as a form of interprocess communication (IPC). However, signals suffer a number of limitations as an IPC mechanism. First, by comparison with other methods of IPC that we examine in later chapters, program- ming with signals is cumbersome and difficult. The reasons for this are as follows:
+- The asynchronous nature of signals means that we face various problems, including reentrancy requirements, race conditions, and the correct handling of global variables from signal handlers. (Most of these problems do not occur if we are using sigwaitinfo() or signalfd() to synchronously fetch signals.)
+- Standard signals are not queued. Even for realtime signals, there are upper limits on the number of signals that may be queued. This means that in order to avoid loss of information, the process receiving the signals must have a method of informing the sender that it is ready to receive another signal. The most obvious method of doing this is for the receiver to send a signal to the sender.
+
+## Signal handlers
+
+If a process receives a signal, the process has a choice of action for that kind of signal. The process can ignore the signal, can specify a handler function, or accept the default action for that kind of signal

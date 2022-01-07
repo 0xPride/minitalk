@@ -1,0 +1,48 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-I",
+      "include",
+      "-I",
+      "lib/ft_printf/includes",
+      "-I",
+      "lib/ft_printf/libft/",
+      "-I/goinfre/habouiba/habouiba/.brew/opt/llvm/include",
+      "-c",
+      "-o",
+      "src/server.o",
+      "src/server.c"
+    ],
+    "directory": "/Users/habouiba/42cursus/minitalk",
+    "file": "/Users/habouiba/42cursus/minitalk/src/server.c",
+    "output": "/Users/habouiba/42cursus/minitalk/src/server.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-I",
+      "include",
+      "-I",
+      "lib/ft_printf/includes",
+      "-I",
+      "lib/ft_printf/libft/",
+      "-I/goinfre/habouiba/habouiba/.brew/opt/llvm/include",
+      "-c",
+      "-o",
+      "src/client.o",
+      "src/client.c"
+    ],
+    "directory": "/Users/habouiba/42cursus/minitalk",
+    "file": "/Users/habouiba/42cursus/minitalk/src/client.c",
+    "output": "/Users/habouiba/42cursus/minitalk/src/client.o"
+  }
+]
