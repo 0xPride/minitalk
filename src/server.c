@@ -6,7 +6,7 @@
 /*   By: habouiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:09:13 by habouiba          #+#    #+#             */
-/*   Updated: 2022/01/07 13:07:14 by habouiba         ###   ########.fr       */
+/*   Updated: 2022/02/02 11:18:52 by habouiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -34,24 +34,31 @@ void	set_struct_field(t_byte *byte, int i, int bit)
 		byte->b8 = bit;
 }
 
-t_byte	byte;
+t_byte	g_byte;
 
-void sigusr_handler(int sig)
+void	sigusr_handler(int sig)
 {
+	static int	idx = 0;
+
 	if (sig == SIGUSR2)
-		ft_printf("1");
+		set_struct_field(&g_byte, idx, 1);
 	else if (sig == SIGUSR1)
-		ft_printf("0");
+		set_struct_field(&g_byte, idx, 0);
+	idx++;
+	if (idx == 8)
+	{
+		idx = 0;
+		ft_printf("%c", g_byte);
+	}
 }
 
 int	main(void)
 {
 	struct sigaction	act;
-	int			pid;
-
+	int					pid;
 
 	ft_bzero(&act, sizeof(act));
-	ft_bzero(&byte, sizeof(byte));
+	ft_bzero(&g_byte, sizeof(g_byte));
 	act.sa_handler = &sigusr_handler;
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
