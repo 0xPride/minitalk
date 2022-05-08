@@ -6,7 +6,7 @@
 /*   By: habouiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:09:06 by habouiba          #+#    #+#             */
-/*   Updated: 2022/02/02 11:22:51 by habouiba         ###   ########.fr       */
+/*   Updated: 2022/05/08 13:18:29 by habouiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -43,7 +43,7 @@ void	send_byte(t_byte *byte, int pid)
 			kill(pid, SIGUSR2);
 		else
 			kill(pid, SIGUSR1);
-		usleep(100);
+		usleep(150);
 		i++;
 	}
 }
